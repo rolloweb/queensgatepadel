@@ -149,8 +149,8 @@
             </select>
           </div>
           <div class="assumption-item">
-            <label>Blended Court utilisation (%)</label>
-            <input type="number" id="utilisation" value="35" min="0" max="100" onchange="calculateAll()">
+            <label>Blended Court Utilisation (%)</label>
+            <input type="number" id="Utilisation" value="35" min="0" max="100" onchange="calculateAll()">
           </div>
           <div class="assumption-item">
             <label>Peak Hour Rate (£)</label>
@@ -201,7 +201,7 @@
         </div>
         <div class="metric">
           <div class="metric-value" id="breakeven-util">0%</div>
-          <div class="metric-label">Break-even utilisation</div>
+          <div class="metric-label">Break-even Utilisation</div>
         </div>
       </div>
 
@@ -303,11 +303,11 @@
           <div style="text-align:center; padding:15px; background:#fce4ec; border-radius:8px;">
             <div style="font-size:1.8em; font-weight:700; color:#c2185b;" id="unique-players">420</div>
             <div style="font-size:.9em; color:#666;">Unique Monthly Players</div>
-            <div style="font-size:.8em; color:#999; margin-top:5px;">Based on utilisation</div>
+            <div style="font-size:.8em; color:#999; margin-top:5px;">Based on Utilisation</div>
           </div>
         </div>
         <div style="background:#e1f5fe; padding:15px; border-radius:8px; margin-top:20px; border-left:4px solid #0277bd;">
-          <p style="margin:0; font-size:.9em;"><strong>Methodology:</strong> Footfall = 4 players per court hour × utilisation × operating hours. Secondary spend from BRC averages (£15–25, using £18 conservative). Dwell time from Savills (sports/leisure visitors stay 2–3× longer). Repeat rate from Playtomic (65% return within 30 days).</p>
+          <p style="margin:0; font-size:.9em;"><strong>Methodology:</strong> Footfall = 4 players per court hour × Utilisation × operating hours. Secondary spend from BRC averages (£15–25, using £18 conservative). Dwell time from Savills (sports/leisure visitors stay 2–3× longer). Repeat rate from Playtomic (65% return within 30 days).</p>
         </div>
       </div>
 
@@ -371,7 +371,7 @@
           <div class="line-item">
             <div>
               <div class="line-item-name">Court Bookings</div>
-              <div class="line-item-desc">Based on utilisation and opening hours</div>
+              <div class="line-item-desc">Based on Utilisation and opening hours</div>
             </div>
             <input type="number" id="court-revenue" value="12500" readonly style="background:#f5f5f5;">
             <div class="line-item-total" id="court-revenue-total">£12,500</div>
@@ -524,7 +524,7 @@
           <ul style="line-height:1.6;">
             <li><strong>Playtomic Global Report 2025:</strong> 3,282 new clubs worldwide, UK pricing benchmarks</li>
             <li><strong>UK Market Rates (2024):</strong> Regional average £7-18 per player per hour (LTA verified)</li>
-            <li><strong>Industry utilisation Data:</strong> 40-45% first year average, 50-80% for established facilities</li>
+            <li><strong>Industry Utilisation Data:</strong> 40-45% first year average, 50-80% for established facilities</li>
             <li><strong>Padel4All Case Study:</strong> 42% revenue increase in 2023, membership doubled</li>
           </ul>
         </div>
@@ -552,7 +552,7 @@
         <div style="margin-top:20px;">
           <h4 style="color:#1976d2; margin-bottom:10px;">Conservative Adjustments Applied</h4>
           <ul style="line-height:1.6%;">
-            <li>utilisation set at <strong>35%</strong> (industry average is 45-50%)</li>
+            <li>Utilisation set at <strong>35%</strong> (industry average is 45-50%)</li>
             <li>Pricing <strong>20-30% below</strong> UK regional averages</li>
             <li>Operating costs increased by <strong>15-20%</strong> safety buffer</li>
             <li>Ancillary revenue reduced by <strong>40-50%</strong> from industry benchmarks</li>
@@ -578,7 +578,7 @@
       // Assumptions
       const openingHours = parseInt(document.getElementById('opening-hours').value);
       const numCourts = parseInt(document.getElementById('num-courts').value);
-      const utilisation = parseFloat(document.getElementById('utilisation').value) / 100;
+      const Utilisation = parseFloat(document.getElementById('Utilisation').value) / 100;
       const pricePeak = parseFloat(document.getElementById('price-peak').value);
       const priceOffpeak = parseFloat(document.getElementById('price-offpeak').value);
       const rentModel = document.getElementById('rent-model').value;
@@ -601,7 +601,7 @@
       const totalHoursPerMonth = numCourts * openingHours * 30;
       const peakHours = totalHoursPerMonth * 0.6;
       const offpeakHours = totalHoursPerMonth * 0.4;
-      const courtBookingRevenue = (peakHours * pricePeak * utilisation) + (offpeakHours * priceOffpeak * utilisation);
+      const courtBookingRevenue = (peakHours * pricePeak * Utilisation) + (offpeakHours * priceOffpeak * Utilisation);
       document.getElementById('court-revenue').value = Math.round(courtBookingRevenue);
 
       // Ancillary revenue
@@ -639,7 +639,7 @@
       const avgPrice = (pricePeak * 0.6 + priceOffpeak * 0.4);
       const ancillaryMonthly = coachingRevenue + corporateRevenue + retailRevenue + eventsRevenue + fbRevenue;
       const breakevenCourtRevenue = totalMonthlyExpenses - ancillaryMonthly;
-      const breakevenutilisation = (breakevenCourtRevenue / (totalHoursPerMonth * avgPrice)) * 100;
+      const breakevenUtilisation = (breakevenCourtRevenue / (totalHoursPerMonth * avgPrice)) * 100;
 
       // Shopping centre metrics
       const playersPerHour = parseFloat(document.getElementById('players-per-hour').value);
@@ -648,7 +648,7 @@
       const secondarySpend = parseFloat(document.getElementById('secondary-spend').value);
       const newVisitorPercent = parseFloat(document.getElementById('new-visitor-percent').value) / 100;
 
-      const courtHoursPerMonth = totalHoursPerMonth * utilisation;
+      const courtHoursPerMonth = totalHoursPerMonth * Utilisation;
       const playersPerMonth = courtHoursPerMonth * playersPerHour;
       const visitorsPerMonth = playersPerMonth * additionalVisitors;
       const totalFootfallPerMonth = playersPerMonth + visitorsPerMonth;
@@ -723,7 +723,7 @@
       document.getElementById('annual-profit').className = annualProfit > 0 ? 'metric-value positive' : 'metric-value negative';
       document.getElementById('roi').textContent = formatPercent(roi);
       document.getElementById('roi').className = roi > 0 ? 'metric-value positive' : 'metric-value negative';
-      document.getElementById('breakeven-util').textContent = formatPercent(breakevenutilisation);
+      document.getElementById('breakeven-util').textContent = formatPercent(breakevenUtilisation);
 
       // Summary table
       document.getElementById('monthly-revenue-summary').textContent = formatCurrency(totalMonthlyRevenue);
@@ -739,8 +739,8 @@
 
       // ===== Populate BOTTOM Validation Block =====
       document.getElementById('calc-footfall').innerHTML =
-        `<strong>Total Footfall</strong> = (Courts × Opening Hours/day × 30 days × utilisation) × Players/hour × (1 + Additional Visitors)
-        <br/><code>(${numCourts} × ${openingHours} × 30 × ${(utilisation*100).toFixed(1)}%) × ${playersPerHour} × (1 + ${additionalVisitors})</code>
+        `<strong>Total Footfall</strong> = (Courts × Opening Hours/day × 30 days × Utilisation) × Players/hour × (1 + Additional Visitors)
+        <br/><code>(${numCourts} × ${openingHours} × 30 × ${(Utilisation*100).toFixed(1)}%) × ${playersPerHour} × (1 + ${additionalVisitors})</code>
         = <strong>${Math.round(totalFootfallPerMonth).toLocaleString()}</strong> / month, <strong>${Math.round(totalFootfallPerYear).toLocaleString()}</strong> / year`;
 
       document.getElementById('calc-newvis').innerHTML =
@@ -775,25 +775,25 @@
     function applyScenarioValues(scenario){
       const scenarios = {
         'very-conservative': {
-          'utilisation':30, 'price-peak':28, 'price-offpeak':18,
+          'Utilisation':30, 'price-peak':28, 'price-offpeak':18,
           'coaching-revenue':800, 'corporate-revenue':600, 'retail-revenue':400,
           'events-revenue':300, 'fb-revenue':300, 'rent-amount':9000,
           'staff-costs':7000, 'utilities':2000
         },
         'conservative': {
-          'utilisation':35, 'price-peak':32, 'price-offpeak':20,
+          'Utilisation':35, 'price-peak':32, 'price-offpeak':20,
           'coaching-revenue':1000, 'corporate-revenue':800, 'retail-revenue':600,
           'events-revenue':400, 'fb-revenue':500, 'rent-amount':8500,
           'staff-costs':6500, 'utilities':1800
         },
         'moderate': {
-          'utilisation':45, 'price-peak':40, 'price-offpeak':25,
+          'Utilisation':45, 'price-peak':40, 'price-offpeak':25,
           'coaching-revenue':1500, 'corporate-revenue':1500, 'retail-revenue':1000,
           'events-revenue':800, 'fb-revenue':1000, 'rent-amount':7500,
           'staff-costs':6000, 'utilities':1600
         },
         'optimistic': {
-          'utilisation':55, 'price-peak':50, 'price-offpeak':30,
+          'Utilisation':55, 'price-peak':50, 'price-offpeak':30,
           'coaching-revenue':2500, 'corporate-revenue':2500, 'retail-revenue':1500,
           'events-revenue':1200, 'fb-revenue':1800, 'rent-amount':7000,
           'staff-costs':5500, 'utilities':1400
