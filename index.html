@@ -276,13 +276,78 @@
                 gap: 5px;
             }
         }
+
+        /* ====== Mobile optimization additions ====== */
+        :root {
+          --pad-lg: 30px;
+          --pad-md: 20px;
+          --pad-sm: 14px;
+        }
+        html, body { overflow-x: hidden; }
+
+        /* Fluid type */
+        .header h1 { font-size: clamp(1.25rem, 2.5vw + 0.5rem, 2rem); }
+        .metric-value { font-size: clamp(1.25rem, 3vw + 0.25rem, 2rem); }
+
+        /* Prevent side scroll on tables and long rows */
+        .summary-table,
+        .section-content { overflow-x: auto; }
+
+        /* Tighten key metrics on narrow screens */
+        .key-metrics { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+
+        /* iOS zoom prevention on inputs */
+        .line-item input,
+        .assumption-item input,
+        .assumption-item select { font-size: 16px; }
+
+        .scenario-btn { min-height: 44px; }
+
+        @media (max-width: 992px) {
+          .content { padding: var(--pad-md); }
+          .section-header { padding: 12px 16px; }
+        }
+
+        @media (max-width: 768px) {
+          .container { border-radius: 0; }
+          .content { padding: var(--pad-sm); }
+
+          .line-item {
+            grid-template-columns: 1fr;
+            gap: 8px;
+          }
+          .line-item-total { text-align: left; }
+
+          .summary-row {
+            grid-template-columns: 1fr;
+            gap: 6px;
+          }
+
+          .key-metrics {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 14px;
+          }
+
+          .scenario-buttons { gap: 8px; }
+          .scenario-btn {
+            flex: 1 1 calc(50% - 8px);
+            padding: 10px 12px;
+          }
+        }
+
+        @media (max-width: 400px) {
+          .key-metrics { grid-template-columns: 1fr; }
+          .scenario-btn { flex: 1 1 100%; }
+        }
+        /* ====== End mobile optimization additions ====== */
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>🎾 Queensgate Padel Courts - Conservative Financial Model</h1>
-            <p><strong>Purpose:</strong> This conservative model stress-tests your business plan using lower revenue estimates and higher cost estimates to show the minimum performance required to succeed. This is your most powerful tool for negotiating with the venue, as it clearly shows how critical a fair rental agreement is.</p>
+            <p><strong>Purpose:</strong> This conservative model stress tests your business plan using lower revenue estimates and higher cost estimates to show the minimum performance required to succeed. This is your most powerful tool for negotiating with the venue, as it clearly shows how critical a fair rental agreement is.</p>
         </div>
         
         <div class="content">
@@ -351,12 +416,12 @@
                 </div>
                 <div class="metric">
                     <div class="metric-value" id="breakeven-util">0%</div>
-                    <div class="metric-label">Break-even Utilization</div>
+                    <div class="metric-label">Break even Utilization</div>
                 </div>
             </div>
             
             <!-- Shopping Center Impact Metrics -->
-            <div class="section" style="border: 2px solid #4caf50;">
+            <div class="section" style="border: 2px solid #4caf50;" data-sticky="true">
                 <div class="section-header" style="background: #e8f5e9;">
                     <div class="section-title" style="color: #2e7d32;">🏬 Shopping Center Impact Metrics</div>
                     <div class="section-total" style="color: #2e7d32;" id="annual-footfall">0 visits</div>
@@ -381,7 +446,7 @@
                     <div class="line-item">
                         <div>
                             <div class="line-item-name">Average Dwell Time (minutes)</div>
-                            <div class="line-item-desc">Source: Savills Retail & Leisure Report 2024</div>
+                            <div class="line-item-desc">Source: Savills Retail and Leisure Report 2024</div>
                         </div>
                         <input type="number" id="dwell-time" value="120" onchange="calculateAll()">
                         <div class="line-item-total" id="dwell-time-display">2.0 hours</div>
@@ -389,7 +454,7 @@
                     <div class="line-item">
                         <div>
                             <div class="line-item-name">Secondary Spend per Visit (£)</div>
-                            <div class="line-item-desc">Source: British Retail Consortium 2024 (leisure visitor avg)</div>
+                        <div class="line-item-desc">Source: British Retail Consortium 2024</div>
                         </div>
                         <input type="number" id="secondary-spend" value="18" onchange="calculateAll()">
                         <div class="line-item-total" id="secondary-spend-display">£18</div>
@@ -435,9 +500,9 @@
                 </div>
             </div>
             
-            <!-- Demographic & Social Impact -->
+            <!-- Demographic and Social Impact -->
             <div class="summary-table" style="margin-top: 20px;">
-                <h3>👥 Demographic & Social Impact</h3>
+                <h3>👥 Demographic and Social Impact</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 15px;">
                     <div style="text-align: center; padding: 15px; background: #fff3e0; border-radius: 8px;">
                         <div style="font-size: 1.8em; font-weight: bold; color: #f57c00;" id="target-age">25-45</div>
@@ -456,20 +521,20 @@
                     </div>
                 </div>
                 <div style="background: #e1f5fe; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #0277bd;">
-                    <p style="margin: 0; font-size: 0.9em;"><strong>Methodology:</strong> Footfall calculations based on 4 players per court hour (industry standard) × utilization rate × operating hours. Secondary spend based on British Retail Consortium average for leisure-anchored shopping centers (£15-25 range, using £18 conservative). Dwell time from Savills research showing sports/leisure visitors stay 2-3x longer than pure retail visitors (60-90 min baseline). Repeat rate from Playtomic showing 65% of first-time padel players return within 30 days.</p>
+                    <p style="margin: 0; font-size: 0.9em;"><strong>Methodology:</strong> Footfall calculations based on 4 players per court hour multiplied by utilization rate and operating hours. Secondary spend based on British Retail Consortium average for leisure anchored shopping centers in the 15 to 25 pound range using 18 pounds as conservative. Dwell time from Savills research showing sports and leisure visitors stay two to three times longer than pure retail visitors. Repeat rate from Playtomic showing 65 percent of first time padel players return within 30 days.</p>
                 </div>
             </div>
             
             <!-- Startup Costs -->
             <div class="section">
                 <div class="section-header">
-                    <div class="section-title">🚀 One-Time Startup Costs (Conservative Estimate)</div>
+                    <div class="section-title">🚀 One Time Startup Costs (Conservative Estimate)</div>
                     <div class="section-total" id="startup-total">£0</div>
                 </div>
                 <div class="section-content">
                     <div class="line-item">
                         <div>
-                            <div class="line-item-name">Court Construction & Core Infrastructure</div>
+                            <div class="line-item-name">Court Construction and Core Infrastructure</div>
                             <div class="line-item-desc">Includes courts, lighting, HVAC, acoustic treatment, floor prep</div>
                         </div>
                         <input type="number" id="court-construction" value="105000" onchange="calculateAll()">
@@ -477,7 +542,7 @@
                     </div>
                     <div class="line-item">
                         <div>
-                            <div class="line-item-name">Facility Fit-Out</div>
+                            <div class="line-item-name">Facility Fit Out</div>
                             <div class="line-item-desc">Reception, changing rooms, permits, design fees, furniture, signage</div>
                         </div>
                         <input type="number" id="facility-fitout" value="60000" onchange="calculateAll()">
@@ -485,8 +550,8 @@
                     </div>
                     <div class="line-item">
                         <div>
-                            <div class="line-item-name">Pre-Opening & Launch</div>
-                            <div class="line-item-desc">IT/booking system, initial equipment inventory, launch marketing</div>
+                            <div class="line-item-name">Pre Opening and Launch</div>
+                            <div class="line-item-desc">IT and booking system, initial equipment inventory, launch marketing</div>
                         </div>
                         <input type="number" id="preopening" value="20000" onchange="calculateAll()">
                         <div class="line-item-total" id="preopening-total">£20,000</div>
@@ -494,7 +559,7 @@
                     <div class="line-item">
                         <div>
                             <div class="line-item-name">Working Capital</div>
-                            <div class="line-item-desc">Cash reserve for first 3-4 months of operating expenses</div>
+                            <div class="line-item-desc">Cash reserve for first 3 to 4 months of operating expenses</div>
                         </div>
                         <input type="number" id="working-capital" value="55000" onchange="calculateAll()">
                         <div class="line-item-total" id="working-capital-total">£55,000</div>
@@ -502,7 +567,7 @@
                     <div class="line-item">
                         <div>
                             <div class="line-item-name">Contingency Fund</div>
-                            <div class="line-item-desc">15% for unexpected costs</div>
+                            <div class="line-item-desc">15 percent for unexpected costs</div>
                         </div>
                         <input type="number" id="contingency" value="36000" onchange="calculateAll()">
                         <div class="line-item-total" id="contingency-total">£36,000</div>
@@ -520,7 +585,7 @@
                     <div class="line-item">
                         <div>
                             <div class="line-item-name">Court Bookings</div>
-                            <div class="line-item-desc">Based on 35% utilization rate</div>
+                            <div class="line-item-desc">Based on 35 percent utilization rate</div>
                         </div>
                         <input type="number" id="court-revenue" value="12500" readonly style="background: #f5f5f5;">
                         <div class="line-item-total" id="court-revenue-total">£12,500</div>
@@ -543,7 +608,7 @@
                     </div>
                     <div class="line-item">
                         <div>
-                            <div class="line-item-name">Retail & Equipment</div>
+                            <div class="line-item-name">Retail and Equipment</div>
                             <div class="line-item-desc">Racket rental, balls, merchandise</div>
                         </div>
                         <input type="number" id="retail-revenue" value="600" onchange="calculateAll()">
@@ -551,7 +616,7 @@
                     </div>
                     <div class="line-item">
                         <div>
-                            <div class="line-item-name">Events & Tournaments</div>
+                            <div class="line-item-name">Events and Tournaments</div>
                             <div class="line-item-desc">Social tournaments, leagues</div>
                         </div>
                         <input type="number" id="events-revenue" value="400" onchange="calculateAll()">
@@ -559,7 +624,7 @@
                     </div>
                     <div class="line-item">
                         <div>
-                            <div class="line-item-name">Food & Beverage</div>
+                            <div class="line-item-name">Food and Beverage</div>
                             <div class="line-item-desc">Vending, café commission</div>
                         </div>
                         <input type="number" id="fb-revenue" value="500" onchange="calculateAll()">
@@ -577,7 +642,7 @@
                 <div class="section-content">
                     <div class="line-item">
                         <div>
-                            <div class="line-item-name">Rent/Lease</div>
+                            <div class="line-item-name">Rent or Lease</div>
                             <div class="line-item-desc">Fixed rent for commercial space</div>
                         </div>
                         <input type="number" id="rent-cost" value="8500" readonly style="background: #f5f5f5;">
@@ -586,7 +651,7 @@
                     <div class="line-item">
                         <div>
                             <div class="line-item-name">Staff Costs</div>
-                            <div class="line-item-desc">1 Manager, 2 part-time staff, freelance coaches</div>
+                            <div class="line-item-desc">1 Manager, 2 part time staff, freelance coaches</div>
                         </div>
                         <input type="number" id="staff-costs" value="6500" onchange="calculateAll()">
                         <div class="line-item-total" id="staff-costs-total">£6,500</div>
@@ -601,7 +666,7 @@
                     </div>
                     <div class="line-item">
                         <div>
-                            <div class="line-item-name">Marketing & Software</div>
+                            <div class="line-item-name">Marketing and Software</div>
                             <div class="line-item-desc">Digital ads, social media, booking system</div>
                         </div>
                         <input type="number" id="marketing" value="1200" onchange="calculateAll()">
@@ -618,7 +683,6 @@
                 </div>
             </div>
             
-           
             <!-- Financial Summary -->
             <div class="summary-table">
                 <h3>📊 Financial Summary (Conservative P&L)</h3>
@@ -646,16 +710,16 @@
             
             <!-- Sources and Validation -->
             <div class="talking-points" style="background: #e3f2fd; border-color: #2196f3;">
-                <h3 style="color: #1565c0;">📚 Data Sources & Validation</h3>
+                <h3 style="color: #1565c0;">📚 Data Sources and Validation</h3>
                 <p><strong>These projections are based on verified industry data and conservative market estimates:</strong></p>
                 
                 <div style="margin-top: 20px;">
-                    <h4 style="color: #1976d2; margin-bottom: 10px;">Construction & Setup Costs</h4>
+                    <h4 style="color: #1976d2; margin-bottom: 10px;">Construction and Setup Costs</h4>
                     <ul style="line-height: 1.6;">
-                        <li><strong>LTA (Lawn Tennis Association) Construction Guidelines 2024:</strong> £55,000-£80,000 per indoor court</li>
-                        <li><strong>S&C Slatter Sports Construction:</strong> Verified quotes for UK indoor facilities</li>
-                        <li><strong>SAPCA (Sports and Play Construction Association):</strong> Industry standard specifications</li>
-                        <li><strong>Actual UK Projects:</strong> TraffordCity (11 courts, £2.5m), Game4Padel Hove, Pure Padel Manchester</li>
+                        <li><strong>LTA Construction Guidelines 2024:</strong> 55,000 to 80,000 pounds per indoor court</li>
+                        <li><strong>S and C Slatter Sports Construction:</strong> Verified quotes for UK indoor facilities</li>
+                        <li><strong>SAPCA:</strong> Industry standard specifications</li>
+                        <li><strong>Actual UK Projects:</strong> TraffordCity, Game4Padel Hove, Pure Padel Manchester</li>
                     </ul>
                 </div>
                 
@@ -663,9 +727,9 @@
                     <h4 style="color: #1976d2; margin-bottom: 10px;">Revenue Projections</h4>
                     <ul style="line-height: 1.6;">
                         <li><strong>Playtomic Global Report 2025:</strong> 3,282 new clubs worldwide, UK pricing benchmarks</li>
-                        <li><strong>UK Market Rates (2024):</strong> Regional average £7-18 per player per hour (LTA verified)</li>
-                        <li><strong>Industry Utilization Data:</strong> 40-45% first year average, 50-80% for established facilities</li>
-                        <li><strong>Padel4All Case Study:</strong> 42% revenue increase in 2023, membership doubled</li>
+                        <li><strong>UK Market Rates 2024:</strong> Regional average 7 to 18 pounds per player per hour</li>
+                        <li><strong>Industry Utilization Data:</strong> 40 to 45 percent first year average, 50 to 80 percent for established facilities</li>
+                        <li><strong>Padel4All Case Study:</strong> 42 percent revenue increase in 2023, membership doubled</li>
                     </ul>
                 </div>
                 
@@ -673,18 +737,18 @@
                     <h4 style="color: #1976d2; margin-bottom: 10px;">Operating Costs</h4>
                     <ul style="line-height: 1.6;">
                         <li><strong>Sport England Movement Fund:</strong> Operating cost benchmarks for community sports facilities</li>
-                        <li><strong>UK Energy Costs 2024:</strong> £0.52/kWh electricity, LED systems 85% savings</li>
-                        <li><strong>Insurance:</strong> LTA Venue Insurance £60m Public Liability coverage requirements</li>
-                        <li><strong>Staff Costs:</strong> Based on UK Living Wage + market rates for sports facility managers</li>
+                        <li><strong>UK Energy Costs 2024:</strong> 0.52 pounds per kWh electricity, LED systems 85 percent savings</li>
+                        <li><strong>Insurance:</strong> LTA Venue Insurance 60 million pounds Public Liability coverage requirements</li>
+                        <li><strong>Staff Costs:</strong> Based on UK Living Wage and market rates for sports facility managers</li>
                     </ul>
                 </div>
                 
                 <div style="margin-top: 20px;">
                     <h4 style="color: #1976d2; margin-bottom: 10px;">Market Validation</h4>
                     <ul style="line-height: 1.6;">
-                        <li><strong>LTA 2024 Report:</strong> 400,000+ UK players (up from 6,000 in 2019), 726 courts operational</li>
-                        <li><strong>Deloitte/Playtomic Study:</strong> 8 million Britons interested in trying padel</li>
-                        <li><strong>Planning Applications:</strong> 544 projected for 2025 (113% increase from 2024)</li>
+                        <li><strong>LTA 2024 Report:</strong> 400,000 plus UK players up from 6,000 in 2019, 726 courts operational</li>
+                        <li><strong>Deloitte and Playtomic Study:</strong> 8 million Britons interested in trying padel</li>
+                        <li><strong>Planning Applications:</strong> 544 projected for 2025</li>
                         <li><strong>Peterborough Specific:</strong> Zero operational courts despite LTA identifying demand for 15 courts</li>
                     </ul>
                 </div>
@@ -692,16 +756,16 @@
                 <div style="margin-top: 20px;">
                     <h4 style="color: #1976d2; margin-bottom: 10px;">Conservative Adjustments Applied</h4>
                     <ul style="line-height: 1.6;">
-                        <li>Utilization set at <strong>35%</strong> (industry average is 45-50%)</li>
-                        <li>Pricing <strong>20-30% below</strong> UK regional averages</li>
-                        <li>Operating costs increased by <strong>15-20%</strong> safety buffer</li>
-                        <li>Ancillary revenue reduced by <strong>40-50%</strong> from industry benchmarks</li>
-                        <li><strong>15% contingency</strong> added to all construction costs</li>
+                        <li>Utilization set at <strong>35%</strong></li>
+                        <li>Pricing <strong>20 to 30%</strong> below UK regional averages</li>
+                        <li>Operating costs increased by <strong>15 to 20%</strong> safety buffer</li>
+                        <li>Ancillary revenue reduced by <strong>40 to 50%</strong> from industry benchmarks</li>
+                        <li><strong>15%</strong> contingency added to all construction costs</li>
                     </ul>
                 </div>
                 
                 <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #ffc107;">
-                    <p style="margin: 0;"><strong>Note:</strong> This model intentionally uses below-average performance metrics to demonstrate viability even in challenging scenarios. Actual industry performance typically exceeds these projections by 30-50%.</p>
+                    <p style="margin: 0;"><strong>Note:</strong> This model intentionally uses below average performance metrics to demonstrate viability even in challenging scenarios. Actual industry performance typically exceeds these projections by 30 to 50 percent.</p>
                 </div>
             </div>
         </div>
@@ -783,9 +847,9 @@
             const monthlyProfit = totalMonthlyRevenue - totalMonthlyExpenses;
             const annualProfit = monthlyProfit * 12;
             const roi = (annualProfit / totalStartup) * 100;
-            const margin = (monthlyProfit / totalMonthlyRevenue) * 100;
+            const margin = (monthlyProfit / totalMonthlyRevenue) * 100 || 0;
             
-            // Calculate break-even utilization
+            // Calculate break even utilization
             const avgPrice = (pricePeak * 0.6 + priceOffpeak * 0.4);
             const ancillaryMonthly = coachingRevenue + corporateRevenue + retailRevenue + eventsRevenue + fbRevenue;
             const breakevenCourtRevenue = totalMonthlyExpenses - ancillaryMonthly;
@@ -817,7 +881,7 @@
             const secondarySpendPerMonth = totalFootfallPerMonth * secondarySpend;
             const secondarySpendPerYear = secondarySpendPerMonth * 12;
             
-            // Calculate total economic impact (padel revenue + secondary spend)
+            // Calculate total economic impact
             const totalEconomicImpactPerMonth = totalMonthlyRevenue + secondarySpendPerMonth;
             const totalEconomicImpactPerYear = totalEconomicImpactPerMonth * 12;
             
@@ -864,11 +928,11 @@
             document.getElementById('monthly-impact').textContent = formatCurrency(totalEconomicImpactPerMonth);
             document.getElementById('yearly-impact').textContent = formatCurrency(totalEconomicImpactPerYear);
             
-            // Update demographic displays (these are estimates based on utilization)
-            const uniquePlayers = Math.round((courtHoursPerMonth * playersPerHour) / 2.5); // Assume players visit 2.5x per month
+            // Update demographic displays
+            const uniquePlayers = Math.round((courtHoursPerMonth * playersPerHour) / 2.5);
             document.getElementById('unique-players').textContent = uniquePlayers.toLocaleString();
-            document.getElementById('repeat-rate').textContent = '65%'; // Fixed based on Playtomic data
-            document.getElementById('target-age').textContent = '25-45'; // Fixed demographic
+            document.getElementById('repeat-rate').textContent = '65%';
+            document.getElementById('target-age').textContent = '25-45';
             
             // Update key metrics
             document.getElementById('total-investment').textContent = formatCurrency(totalStartup);
@@ -959,11 +1023,36 @@
             
             calculateAll();
         }
+
+        // Mobile collapsible sections setup
+        function setupMobileSectionToggles() {
+            const isMobile = window.matchMedia('(max-width: 768px)').matches;
+            const sections = document.querySelectorAll('.section');
+
+            sections.forEach(sec => {
+                const header = sec.querySelector('.section-header');
+                const content = sec.querySelector('.section-content');
+                if (!header || !content) return;
+
+                if (isMobile) {
+                    if (!sec.dataset.sticky) content.style.display = 'none';
+                    // Avoid stacking multiple listeners
+                    header.__toggleAttached || header.addEventListener('click', () => {
+                        content.style.display = (content.style.display === 'none') ? 'block' : 'none';
+                    });
+                    header.__toggleAttached = true;
+                } else {
+                    content.style.display = 'block';
+                }
+            });
+        }
         
         // Initialize on load
         window.addEventListener('load', function() {
             calculateAll();
+            setupMobileSectionToggles();
         });
+        window.addEventListener('resize', setupMobileSectionToggles);
     </script>
 </body>
 </html>
