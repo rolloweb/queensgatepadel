@@ -365,8 +365,8 @@
                         </select>
                     </div>
                     <div class="assumption-item">
-                        <label>Blended Court Utilization (%)</label>
-                        <input type="number" id="utilization" value="35" min="0" max="100" onchange="calculateAll()">
+                        <label>Blended Court Utilisation (%)</label>
+                        <input type="number" id="utilisation" value="35" min="0" max="100" onchange="calculateAll()">
                     </div>
                     <div class="assumption-item">
                         <label>Peak Hour Rate (£)</label>
@@ -416,7 +416,7 @@
                 </div>
                 <div class="metric">
                     <div class="metric-value" id="breakeven-util">0%</div>
-                    <div class="metric-label">Break even Utilization</div>
+                    <div class="metric-label">Break even Utilisation</div>
                 </div>
             </div>
             
@@ -517,11 +517,11 @@
                     <div style="text-align: center; padding: 15px; background: #fce4ec; border-radius: 8px;">
                         <div style="font-size: 1.8em; font-weight: bold; color: #c2185b;" id="unique-players">420</div>
                         <div style="font-size: 0.9em; color: #666;">Unique Monthly Players</div>
-                        <div style="font-size: 0.8em; color: #999; margin-top: 5px;">Based on utilization</div>
+                        <div style="font-size: 0.8em; color: #999; margin-top: 5px;">Based on utilisation</div>
                     </div>
                 </div>
                 <div style="background: #e1f5fe; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #0277bd;">
-                    <p style="margin: 0; font-size: 0.9em;"><strong>Methodology:</strong> Footfall calculations based on 4 players per court hour multiplied by utilization rate and operating hours. Secondary spend based on British Retail Consortium average for leisure anchored shopping centers in the 15 to 25 pound range using 18 pounds as conservative. Dwell time from Savills research showing sports and leisure visitors stay two to three times longer than pure retail visitors. Repeat rate from Playtomic showing 65 percent of first time padel players return within 30 days.</p>
+                    <p style="margin: 0; font-size: 0.9em;"><strong>Methodology:</strong> Footfall calculations based on 4 players per court hour multiplied by utilisation rate and operating hours. Secondary spend based on British Retail Consortium average for leisure anchored shopping centers in the 15 to 25 pound range using 18 pounds as conservative. Dwell time from Savills research showing sports and leisure visitors stay two to three times longer than pure retail visitors. Repeat rate from Playtomic showing 65 percent of first time padel players return within 30 days.</p>
                 </div>
             </div>
             
@@ -585,7 +585,7 @@
                     <div class="line-item">
                         <div>
                             <div class="line-item-name">Court Bookings</div>
-                            <div class="line-item-desc">Based on 35 percent utilization rate</div>
+                            <div class="line-item-desc">Based on 35 percent utilisation rate</div>
                         </div>
                         <input type="number" id="court-revenue" value="12500" readonly style="background: #f5f5f5;">
                         <div class="line-item-total" id="court-revenue-total">£12,500</div>
@@ -728,7 +728,7 @@
                     <ul style="line-height: 1.6;">
                         <li><strong>Playtomic Global Report 2025:</strong> 3,282 new clubs worldwide, UK pricing benchmarks</li>
                         <li><strong>UK Market Rates 2024:</strong> Regional average 7 to 18 pounds per player per hour</li>
-                        <li><strong>Industry Utilization Data:</strong> 40 to 45 percent first year average, 50 to 80 percent for established facilities</li>
+                        <li><strong>Industry Utilisation Data:</strong> 40 to 45 percent first year average, 50 to 80 percent for established facilities</li>
                         <li><strong>Padel4All Case Study:</strong> 42 percent revenue increase in 2023, membership doubled</li>
                     </ul>
                 </div>
@@ -756,7 +756,7 @@
                 <div style="margin-top: 20px;">
                     <h4 style="color: #1976d2; margin-bottom: 10px;">Conservative Adjustments Applied</h4>
                     <ul style="line-height: 1.6;">
-                        <li>Utilization set at <strong>35%</strong></li>
+                        <li>Utilisation set at <strong>35%</strong></li>
                         <li>Pricing <strong>20 to 30%</strong> below UK regional averages</li>
                         <li>Operating costs increased by <strong>15 to 20%</strong> safety buffer</li>
                         <li>Ancillary revenue reduced by <strong>40 to 50%</strong> from industry benchmarks</li>
@@ -784,7 +784,7 @@
         function calculateAll() {
             // Get basic assumptions
             const numCourts = parseInt(document.getElementById('num-courts').value);
-            const utilization = parseFloat(document.getElementById('utilization').value) / 100;
+            const utilisation = parseFloat(document.getElementById('utilisation').value) / 100;
             const pricePeak = parseFloat(document.getElementById('price-peak').value);
             const priceOffpeak = parseFloat(document.getElementById('price-offpeak').value);
             const rentModel = document.getElementById('rent-model').value;
@@ -811,7 +811,7 @@
             const peakHours = totalHoursPerMonth * 0.6;
             const offpeakHours = totalHoursPerMonth * 0.4;
             
-            const courtBookingRevenue = (peakHours * pricePeak * utilization) + (offpeakHours * priceOffpeak * utilization);
+            const courtBookingRevenue = (peakHours * pricePeak * utilisation) + (offpeakHours * priceOffpeak * utilisation);
             document.getElementById('court-revenue').value = Math.round(courtBookingRevenue);
             
             // Get ancillary revenue
@@ -849,11 +849,11 @@
             const roi = (annualProfit / totalStartup) * 100;
             const margin = (monthlyProfit / totalMonthlyRevenue) * 100 || 0;
             
-            // Calculate break even utilization
+            // Calculate break even utilisation
             const avgPrice = (pricePeak * 0.6 + priceOffpeak * 0.4);
             const ancillaryMonthly = coachingRevenue + corporateRevenue + retailRevenue + eventsRevenue + fbRevenue;
             const breakevenCourtRevenue = totalMonthlyExpenses - ancillaryMonthly;
-            const breakevenUtilization = (breakevenCourtRevenue / (totalHoursPerMonth * avgPrice)) * 100;
+            const breakevenUtilisation = (breakevenCourtRevenue / (totalHoursPerMonth * avgPrice)) * 100;
             
             // Calculate shopping center metrics
             const playersPerHour = parseFloat(document.getElementById('players-per-hour').value);
@@ -863,7 +863,7 @@
             const newVisitorPercent = parseFloat(document.getElementById('new-visitor-percent').value) / 100;
             
             // Calculate footfall
-            const courtHoursPerMonth = totalHoursPerMonth * utilization;
+            const courtHoursPerMonth = totalHoursPerMonth * utilisation;
             const playersPerMonth = courtHoursPerMonth * playersPerHour;
             const visitorsPerMonth = playersPerMonth * additionalVisitors;
             const totalFootfallPerMonth = playersPerMonth + visitorsPerMonth;
@@ -942,7 +942,7 @@
             document.getElementById('annual-profit').className = annualProfit > 0 ? 'metric-value positive' : 'metric-value negative';
             document.getElementById('roi').textContent = formatPercent(roi);
             document.getElementById('roi').className = roi > 0 ? 'metric-value positive' : 'metric-value negative';
-            document.getElementById('breakeven-util').textContent = formatPercent(breakevenUtilization);
+            document.getElementById('breakeven-util').textContent = formatPercent(breakevenUtilisation);
             
             // Update summary table
             document.getElementById('monthly-revenue-summary').textContent = formatCurrency(totalMonthlyRevenue);
@@ -960,7 +960,7 @@
         function loadScenario(scenario) {
             const scenarios = {
                 'very-conservative': {
-                    'utilization': 30,
+                    'utilisation': 30,
                     'price-peak': 28,
                     'price-offpeak': 18,
                     'coaching-revenue': 800,
@@ -973,7 +973,7 @@
                     'utilities': 2000
                 },
                 'conservative': {
-                    'utilization': 35,
+                    'utilisation': 35,
                     'price-peak': 32,
                     'price-offpeak': 20,
                     'coaching-revenue': 1000,
@@ -986,7 +986,7 @@
                     'utilities': 1800
                 },
                 'moderate': {
-                    'utilization': 45,
+                    'utilisation': 45,
                     'price-peak': 40,
                     'price-offpeak': 25,
                     'coaching-revenue': 1500,
@@ -999,7 +999,7 @@
                     'utilities': 1600
                 },
                 'optimistic': {
-                    'utilization': 55,
+                    'utilisation': 55,
                     'price-peak': 50,
                     'price-offpeak': 30,
                     'coaching-revenue': 2500,
