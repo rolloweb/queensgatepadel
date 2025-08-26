@@ -358,6 +358,18 @@
             <input type="number" id="contingency" value="36000" onchange="calculateAll()">
             <div class="line-item-total" id="contingency-total">£36,000</div>
           </div>
+
+          <!-- Council Fee on Non-Court Build (one-off) -->
+          <div class="line-item">
+            <div>
+              <div class="line-item-name">Council Fee on Non-Court Build</div>
+              <div class="line-item-desc">
+                Defaults to <strong>4.4%</strong> of Facility Fit-Out + Pre-Opening (one-off). Adjust % if needed.
+              </div>
+            </div>
+            <input type="number" id="cr-build-percent" value="4.4" step="0.1" onchange="calculateAll()">
+            <div class="line-item-total" id="cr-build-fee-total">£0</div>
+          </div>
         </div>
       </div>
 
@@ -434,6 +446,27 @@
             <input type="number" id="rent-cost" value="8500" readonly style="background:#f5f5f5;">
             <div class="line-item-total" id="rent-cost-total">£8,500</div>
           </div>
+
+          <!-- Council Rates: Half of Rental (monthly, auto) -->
+          <div class="line-item">
+            <div>
+              <div class="line-item-name">Council Rates — Half of Rental</div>
+              <div class="line-item-desc">Auto-calculated as 50% of current rent model</div>
+            </div>
+            <input type="number" id="cr-half-rent" value="0" readonly style="background:#f5f5f5;">
+            <div class="line-item-total" id="cr-half-rent-total">£0</div>
+          </div>
+
+          <!-- Council Rates: £1,650 per court (annual → monthly) -->
+          <div class="line-item">
+            <div>
+              <div class="line-item-name">Council Rates — Per Court (annual → monthly)</div>
+              <div class="line-item-desc">Annual per-court fee pro-rated monthly</div>
+            </div>
+            <input type="number" id="cr-per-court-annual" value="1650" step="50" onchange="calculateAll()">
+            <div class="line-item-total" id="cr-per-court-monthly-total">£0</div>
+          </div>
+
           <div class="line-item">
             <div>
               <div class="line-item-name">Staff Costs</div>
@@ -521,7 +554,7 @@
         
         <div style="margin-top:20px;">
           <h4 style="color:#1976d2; margin-bottom:10px;">Revenue Projections</h4>
-          <ul style="line-height:1.6;">
+          <ul style="line-height:1.6%;">
             <li><strong>Playtomic Global Report 2025:</strong> 3,282 new clubs worldwide, UK pricing benchmarks</li>
             <li><strong>UK Market Rates (2024):</strong> Regional average £7-18 per player per hour (LTA verified)</li>
             <li><strong>Industry Utilisation Data:</strong> 40-45% first year average, 50-80% for established facilities</li>
@@ -531,7 +564,7 @@
         
         <div style="margin-top:20px;">
           <h4 style="color:#1976d2; margin-bottom:10px;">Operating Costs</h4>
-          <ul style="line-height:1.6;">
+          <ul style="line-height:1.6%;">
             <li><strong>Sport England Movement Fund:</strong> Operating cost benchmarks for community sports facilities</li>
             <li><strong>UK Energy Costs 2024:</strong> £0.52/kWh electricity, LED systems 85% savings</li>
             <li><strong>Insurance:</strong> LTA Venue Insurance £60m Public Liability coverage requirements</li>
@@ -541,7 +574,7 @@
         
         <div style="margin-top:20px;">
           <h4 style="color:#1976d2; margin-bottom:10px;">Market Validation</h4>
-          <ul style="line-height:1.6;">
+          <ul style="line-height:1.6%;">
             <li><strong>LTA 2024 Report:</strong> 400,000+ UK players (up from 6,000 in 2019), 726 courts operational</li>
             <li><strong>Deloitte/Playtomic Study:</strong> 8 million Britons interested in trying padel</li>
             <li><strong>Planning Applications:</strong> 544 projected for 2025 (113% increase from 2024)</li>
@@ -550,16 +583,16 @@
         </div>
         
         <div class="conservative-adjustments">
-  <h4>Conservative Adjustments Applied</h4>
-  <ul>
-    <li>Utilization set at 35% (industry average is 45-50%)</li>
-    <li>Pricing 20-30% below UK regional averages</li>
-    <li>Operating costs increased by 15-20% safety buffer</li>
-    <li>Ancillary revenue reduced by 40-50% from industry benchmarks</li>
-    <li>15% contingency added to all construction costs</li>
-  </ul>
-  <p><em>Note:</em> This model intentionally uses below-average performance metrics to demonstrate viability even in challenging scenarios. Actual industry performance typically exceeds these projections by 30-50%.</p>
-</div>
+          <h4>Conservative Adjustments Applied</h4>
+          <ul>
+            <li>Utilization set at 35% (industry average is 45-50%)</li>
+            <li>Pricing 20-30% below UK regional averages</li>
+            <li>Operating costs increased by 15-20% safety buffer</li>
+            <li>Ancillary revenue reduced by 40-50% from industry benchmarks</li>
+            <li>15% contingency added to all construction costs</li>
+          </ul>
+          <p><em>Note:</em> This model intentionally uses below-average performance metrics to demonstrate viability even in challenging scenarios. Actual industry performance typically exceeds these projections by 30-50%.</p>
+        </div>
        
         <div style="background:#fff3cd; padding:15px; border-radius:8px; margin-top:20px; border-left:4px solid #ffc107;">
           <p style="margin:0;"><strong>Note:</strong> This model intentionally uses below-average performance metrics to demonstrate viability even in challenging scenarios. Actual industry performance typically exceeds these projections by 30-50%.</p>
@@ -596,7 +629,14 @@
       const preopening = parseFloat(document.getElementById('preopening').value);
       const workingCapital = parseFloat(document.getElementById('working-capital').value);
       const contingency = parseFloat(document.getElementById('contingency').value);
-      const totalStartup = courtConstruction + facilityFitout + preopening + workingCapital + contingency;
+
+      // Council fee on non-court build (one-off)
+      const crBuildPercent = parseFloat(document.getElementById('cr-build-percent')?.value || 0) / 100;
+      const nonCourtBuildBase = facilityFitout + preopening; // adjust base here if council clarifies scope
+      const crBuildFee = nonCourtBuildBase * crBuildPercent;
+
+      // Total startup includes council fee
+      const totalStartup = courtConstruction + facilityFitout + preopening + workingCapital + contingency + crBuildFee;
 
       // Capacity & revenue
       const totalHoursPerMonth = numCourts * openingHours * 30;
@@ -623,12 +663,21 @@
         document.getElementById('rent-cost').value = rentCost;
       }
 
+      // Council rates (recurring)
+      // 1) Half of rental (monthly)
+      const crHalfRent = 0.5 * rentCost;
+
+      // 2) £1,650 per court annually → monthly
+      const crPerCourtAnnual = parseFloat(document.getElementById('cr-per-court-annual')?.value || 0);
+      const crPerCourtMonthly = (crPerCourtAnnual * numCourts) / 12;
+
       // Opex
       const staffCosts = parseFloat(document.getElementById('staff-costs').value);
       const utilities = parseFloat(document.getElementById('utilities').value);
       const marketing = parseFloat(document.getElementById('marketing').value);
       const otherCosts = parseFloat(document.getElementById('other-costs').value);
-      const totalMonthlyExpenses = rentCost + staffCosts + utilities + marketing + otherCosts;
+
+      const totalMonthlyExpenses = rentCost + crHalfRent + crPerCourtMonthly + staffCosts + utilities + marketing + otherCosts;
 
       // P&L
       const monthlyProfit = totalMonthlyRevenue - totalMonthlyExpenses;
@@ -667,14 +716,16 @@
       const totalEconomicImpactPerMonth = totalMonthlyRevenue + secondarySpendPerMonth;
       const totalEconomicImpactPerYear = totalEconomicImpactPerMonth * 12;
 
-      // Update UI: costs & revs
+      // Update UI: startup costs
       document.getElementById('court-construction-total').textContent = formatCurrency(courtConstruction);
       document.getElementById('facility-fitout-total').textContent = formatCurrency(facilityFitout);
       document.getElementById('preopening-total').textContent = formatCurrency(preopening);
       document.getElementById('working-capital-total').textContent = formatCurrency(workingCapital);
       document.getElementById('contingency-total').textContent = formatCurrency(contingency);
+      document.getElementById('cr-build-fee-total').textContent = formatCurrency(crBuildFee);
       document.getElementById('startup-total').textContent = formatCurrency(totalStartup);
 
+      // Update UI: revenue
       document.getElementById('court-revenue-total').textContent = formatCurrency(courtBookingRevenue);
       document.getElementById('coaching-revenue-total').textContent = formatCurrency(coachingRevenue);
       document.getElementById('corporate-revenue-total').textContent = formatCurrency(corporateRevenue);
@@ -683,7 +734,11 @@
       document.getElementById('fb-revenue-total').textContent = formatCurrency(fbRevenue);
       document.getElementById('revenue-total').textContent = formatCurrency(totalMonthlyRevenue);
 
+      // Update UI: expenses
       document.getElementById('rent-cost-total').textContent = formatCurrency(rentCost);
+      document.getElementById('cr-half-rent').value = Math.round(crHalfRent);
+      document.getElementById('cr-half-rent-total').textContent = formatCurrency(crHalfRent);
+      document.getElementById('cr-per-court-monthly-total').textContent = formatCurrency(crPerCourtMonthly);
       document.getElementById('staff-costs-total').textContent = formatCurrency(staffCosts);
       document.getElementById('utilities-total').textContent = formatCurrency(utilities);
       document.getElementById('marketing-total').textContent = formatCurrency(marketing);
